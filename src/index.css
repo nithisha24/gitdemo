@@ -29,42 +29,142 @@
   }
 }
 
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+@layer components {
+  /* Primary CTA Button — subtle 2px hover lift, restrained blue/cyan glow, natural press */
+  .btn-emiqen-primary {
+    @apply inline-flex items-center justify-center gap-2 font-semibold text-white bg-emiqen-blue rounded-xl shadow-elevated transition-all duration-200 ease-out select-none;
+  }
+  .btn-emiqen-primary:hover:not(:disabled) {
+    @apply bg-emiqen-blue-hover -translate-y-0.5;
+    box-shadow: 0 10px 28px -4px rgba(23, 105, 248, 0.34), 0 0 16px -4px rgba(0, 212, 232, 0.28);
+  }
+  .btn-emiqen-primary:active:not(:disabled) {
+    @apply translate-y-0 scale-[0.985] shadow-subtle;
+  }
+  .btn-emiqen-primary:focus-visible {
+    @apply outline-none ring-2 ring-emiqen-cyan ring-offset-2;
+  }
+  .btn-emiqen-primary:disabled {
+    @apply opacity-60 cursor-not-allowed translate-y-0 shadow-none;
+  }
+
+  /* Secondary / Outline Button — smooth border & soft blue tint on hover */
+  .btn-emiqen-secondary {
+    @apply inline-flex items-center justify-center gap-2 font-semibold text-emiqen-navy bg-white border border-slate-200 rounded-xl shadow-subtle transition-all duration-200 ease-out select-none;
+  }
+  .btn-emiqen-secondary:hover:not(:disabled) {
+    @apply border-emiqen-blue/50 bg-emiqen-soft-bg text-emiqen-blue -translate-y-0.5 shadow-elevated;
+  }
+  .btn-emiqen-secondary:active:not(:disabled) {
+    @apply translate-y-0 scale-[0.985] shadow-subtle;
+  }
+  .btn-emiqen-secondary:focus-visible {
+    @apply outline-none ring-2 ring-emiqen-blue ring-offset-2;
+  }
+  .btn-emiqen-secondary:disabled {
+    @apply opacity-55 cursor-not-allowed translate-y-0 shadow-none;
+  }
+
+  /* Navigation link with animated underline indicator */
+  .nav-link-emiqen {
+    @apply relative px-3 py-1.5 text-sm font-medium text-slate-700 rounded-lg transition-colors duration-200 hover:text-emiqen-blue hover:bg-emiqen-soft-bg/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue;
+  }
+  .nav-link-emiqen::after {
+    content: '';
+    @apply absolute bottom-0.5 left-3 right-3 h-0.5 rounded-full bg-gradient-to-r from-emiqen-blue to-emiqen-cyan scale-x-0 origin-left transition-transform duration-200 ease-out;
+  }
+  .nav-link-emiqen:hover::after,
+  .nav-link-emiqen[data-active='true']::after {
+    @apply scale-x-100;
+  }
+
+  /* Interactive Card — only for genuinely clickable cards */
+  .card-emiqen-interactive {
+    @apply transition-all duration-200 ease-out cursor-pointer;
+  }
+  .card-emiqen-interactive:hover {
+    @apply -translate-y-0.5 border-emiqen-blue/45 shadow-elevated;
+  }
+  .card-emiqen-interactive:active {
+    @apply translate-y-0 scale-[0.995];
   }
 }
 
-/* Custom subtle waveform animations */
-@keyframes wavePulse {
+/* Waveform state animations */
+@keyframes emiqenWavePlaying {
   0%, 100% {
-    transform: scaleY(0.4);
-    opacity: 0.7;
+    transform: scaleY(0.38);
+    opacity: 0.78;
   }
-  50% {
-    transform: scaleY(1);
+  35% {
+    transform: scaleY(1.08);
     opacity: 1;
   }
+  70% {
+    transform: scaleY(0.62);
+    opacity: 0.9;
+  }
 }
 
+@keyframes emiqenWaveProcessing {
+  0%, 100% {
+    transform: scaleY(0.45);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scaleY(0.95);
+    opacity: 0.95;
+  }
+}
+
+@keyframes emiqenWaveIdle {
+  0%, 100% {
+    transform: scaleY(0.88);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scaleY(1.04);
+    opacity: 0.88;
+  }
+}
+
+.emiqen-wave-bar-playing {
+  transform-origin: center;
+  animation-name: emiqenWavePlaying;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.emiqen-wave-bar-processing {
+  transform-origin: center;
+  animation-name: emiqenWaveProcessing;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.emiqen-wave-bar-idle {
+  transform-origin: center;
+  animation-name: emiqenWaveIdle;
+  animation-Duration: 2.8s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* Legacy wave utility classes kept for compatibility */
 .animate-wave-1 {
-  animation: wavePulse 1.4s ease-in-out infinite;
+  animation: emiqenWavePlaying 1.1s ease-in-out infinite;
 }
 .animate-wave-2 {
-  animation: wavePulse 1.2s ease-in-out infinite 0.2s;
+  animation: emiqenWavePlaying 0.95s ease-in-out infinite 0.15s;
 }
 .animate-wave-3 {
-  animation: wavePulse 1.6s ease-in-out infinite 0.4s;
+  animation: emiqenWavePlaying 1.25s ease-in-out infinite 0.3s;
 }
 .animate-wave-4 {
-  animation: wavePulse 1.3s ease-in-out infinite 0.1s;
+  animation: emiqenWavePlaying 1.05s ease-in-out infinite 0.1s;
 }
 .animate-wave-5 {
-  animation: wavePulse 1.5s ease-in-out infinite 0.3s;
+  animation: emiqenWavePlaying 1.18s ease-in-out infinite 0.22s;
 }
 
 /* Glass & Glow utilities */
@@ -82,3 +182,17 @@
   border: 1px solid rgba(0, 212, 232, 0.2);
 }
 
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-emiqen-primary:hover:not(:disabled),
+  .btn-emiqen-secondary:hover:not(:disabled),
+  .card-emiqen-interactive:hover {
+    transform: none !important;
+  }
+}

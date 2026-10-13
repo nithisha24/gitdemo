@@ -73,20 +73,29 @@ export const HeroSection: React.FC = () => {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center lg:justify-start gap-3.5 pt-2">
               <button
                 type="button"
                 onClick={() => scrollTo('#contact')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-base font-semibold text-white bg-emiqen-blue hover:bg-emiqen-blue-hover active:scale-[0.98] rounded-xl shadow-elevated transition-all"
+                className="btn-emiqen-primary group w-full sm:w-auto px-6 py-3.5 text-base"
               >
                 <span>{brand.primaryCta}</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => scrollTo('#try-experience')}
+                className="btn-emiqen-secondary group w-full sm:w-auto px-6 py-3.5 text-base"
+              >
+                <Sparkles className="w-4 h-4 text-emiqen-blue transition-transform duration-200 group-hover:scale-110" />
+                <span>Try AI Playground</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => scrollTo('#platform')}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 text-base font-semibold text-emiqen-navy bg-white hover:bg-slate-50 border border-slate-200 active:scale-[0.98] rounded-xl transition-all shadow-subtle"
+                className="btn-emiqen-secondary group w-full sm:w-auto px-5 py-3.5 text-sm"
               >
                 <Layers className="w-4 h-4 text-emiqen-blue" />
                 <span>{brand.secondaryCta}</span>

@@ -62,6 +62,7 @@ export const siteContent = {
   },
 
   nav: [
+    { label: 'Try Experience', href: '#try-experience' },
     { label: 'Platform', href: '#platform' },
     { label: 'Data Advantage', href: '#data-advantage' },
     { label: 'How it works', href: '#how-it-works' },
@@ -379,6 +380,7 @@ export const siteContent = {
       {
         title: 'Platform',
         links: [
+          { label: 'Try AI Playground', href: '#try-experience' },
           { label: 'Capabilities', href: '#platform' },
           { label: 'How it works', href: '#how-it-works' },
           { label: 'Pipeline Architecture', href: '#how-it-works' },

@@ -1,10 +1,13 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BrandLogo } from './BrandLogo';
 import { siteContent } from '../data/siteContent';
 import { ArrowUp } from 'lucide-react';
 
 export const SiteFooter: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -18,6 +21,19 @@ export const SiteFooter: React.FC = () => {
       const elementPosition = el.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - navOffset;
       window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const target = document.querySelector(href);
+        if (target) {
+          const navOffset = 80;
+          const pos = target.getBoundingClientRect().top + window.scrollY - navOffset;
+          window.scrollTo({ top: pos, behavior: 'smooth' });
+        }
+      }, 100);
     }
   };
 
@@ -27,7 +43,18 @@ export const SiteFooter: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
           {/* Brand Info (2 cols on large screen) */}
           <div className="lg:col-span-2 space-y-4">
-            <BrandLogo variant="full" theme="dark" iconSize={36} />
+            <a
+              href="#top"
+              onClick={(e) => {
+                e.preventDefault();
+                if (location.pathname !== '/') navigate('/');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="inline-block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-cyan rounded-lg"
+              aria-label="EMIQEN Home"
+            >
+              <BrandLogo variant="full" theme="dark" iconSize={36} />
+            </a>
 
             <p className="text-sm font-medium text-slate-300">
               {siteContent.footer.brandDescriptor}
@@ -57,7 +84,7 @@ export const SiteFooter: React.FC = () => {
                     <a
                       href={link.href}
                       onClick={(e) => scrollTo(e, link.href)}
-                      className="text-xs sm:text-sm text-slate-400 hover:text-emiqen-cyan transition-colors"
+                      className="inline-flex items-center text-xs sm:text-sm text-slate-400 hover:text-emiqen-cyan hover:translate-x-0.5 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-cyan rounded"
                     >
                       {link.label}
                     </a>
@@ -82,11 +109,11 @@ export const SiteFooter: React.FC = () => {
             <button
               type="button"
               onClick={scrollToTop}
-              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors"
+              className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-cyan"
               aria-label="Back to top"
             >
               <span>Back to top</span>
-              <ArrowUp className="w-3.5 h-3.5" />
+              <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
         </div>

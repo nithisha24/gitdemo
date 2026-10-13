@@ -88,7 +88,7 @@ export const ForgotPasswordPage: React.FC = () => {
                   </div>
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-6 rounded-xl font-semibold text-white bg-emiqen-blue hover:bg-emiqen-blue-hover transition-all shadow-elevated"
+                    className="btn-emiqen-primary w-full py-3.5 px-6 rounded-xl font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue"
                   >
                     Send reset link
                   </button>

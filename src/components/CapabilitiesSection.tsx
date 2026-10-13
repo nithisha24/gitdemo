@@ -50,7 +50,7 @@ export const CapabilitiesSection: React.FC = () => {
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-emiqen-soft-border bg-white p-7 shadow-subtle hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group"
+                className="card-emiqen-interactive rounded-2xl border border-emiqen-soft-border bg-white p-7 shadow-subtle flex flex-col justify-between group"
               >
                 <div>
                   {/* Top Bar with Icon and Tag */}

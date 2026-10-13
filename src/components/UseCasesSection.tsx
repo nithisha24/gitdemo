@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { siteContent } from '../data/siteContent';
+import { voiceAudioBridge, VoiceAudioState } from '../services/voiceAudioBridge';
+import { WaveformVisualizer } from './WaveformVisualizer';
 import {
   Users,
   FileCheck,
@@ -8,6 +10,9 @@ import {
   Info,
   Mic,
   AlignLeft,
+  Volume2,
+  Square,
+  ArrowRight,
 } from 'lucide-react';
 
 const USE_CASE_ICONS = {
@@ -19,6 +24,39 @@ const USE_CASE_ICONS = {
 
 export const UseCasesSection: React.FC = () => {
   const { useCases } = siteContent;
+  const [audioSnap, setAudioSnap] = useState<VoiceAudioState>(voiceAudioBridge.getState());
+
+  useEffect(() => {
+    return voiceAudioBridge.subscribe(setAudioSnap);
+  }, []);
+
+  const handleToggleSample = (itemId: string, sampleInput: string) => {
+    const playId = `usecase-${itemId}`;
+    const isThisActive =
+      audioSnap.activeId === playId &&
+      (audioSnap.status === 'playing' || audioSnap.status === 'processing' || audioSnap.status === 'paused');
+
+    if (isThisActive) {
+      voiceAudioBridge.stopPlayback();
+    } else {
+      const cleanText = sampleInput.replace(/^["“]|["”]$/g, '');
+      voiceAudioBridge.play({
+        id: playId,
+        text: cleanText,
+        lang: 'en-IN',
+      });
+    }
+  };
+
+  const scrollToPlayground = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const target = document.querySelector('#try-experience');
+    if (target) {
+      const navOffset = 80;
+      const pos = target.getBoundingClientRect().top + window.scrollY - navOffset;
+      window.scrollTo({ top: pos, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section id="use-cases" className="py-20 md:py-28 bg-emiqen-soft-bg/50 border-t border-slate-200/80 scroll-mt-20">
@@ -43,11 +81,15 @@ export const UseCasesSection: React.FC = () => {
           {useCases.items.map((item) => {
             const Icon =
               USE_CASE_ICONS[item.id as keyof typeof USE_CASE_ICONS] || Users;
+            const playId = `usecase-${item.id}`;
+            const isActive = audioSnap.activeId === playId;
+            const cardWaveState = isActive ? audioSnap.status : 'idle';
+            const isPlaying = isActive && (audioSnap.status === 'playing' || audioSnap.status === 'processing');
 
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-emiqen-soft-border bg-white p-7 sm:p-8 shadow-subtle hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group"
+                className="card-emiqen-interactive rounded-2xl border border-emiqen-soft-border bg-white p-7 sm:p-8 shadow-subtle flex flex-col justify-between group"
               >
                 <div>
                   {/* Top Bar */}
@@ -85,7 +127,7 @@ export const UseCasesSection: React.FC = () => {
                 </div>
 
                 {/* Illustrative Query Block */}
-                <div className="pt-4 border-t border-slate-100 space-y-2">
+                <div className="pt-4 border-t border-slate-100 space-y-3">
                   <div className="flex items-center justify-between text-[11px] text-slate-400 font-semibold uppercase tracking-wider">
                     <span>Illustrative Sample Query</span>
                     <span className="text-slate-500 font-normal">
@@ -94,6 +136,47 @@ export const UseCasesSection: React.FC = () => {
                   </div>
                   <div className="rounded-xl bg-slate-50 border border-slate-200/70 p-3.5 text-xs text-slate-700 italic font-mono leading-relaxed">
                     {item.sampleInput}
+                  </div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleSample(item.id, item.sampleInput)}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue ${
+                          isPlaying
+                            ? 'bg-emiqen-navy text-white'
+                            : 'bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-emiqen-blue'
+                        }`}
+                        aria-label={isPlaying ? `Stop sample query for ${item.title}` : `Listen to sample query for ${item.title}`}
+                      >
+                        {isPlaying ? (
+                          <>
+                            <Square className="w-3 h-3 fill-current text-emiqen-cyan" />
+                            <span>Stop Sample</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 className="w-3.5 h-3.5 text-emiqen-blue" />
+                            <span>Hear Sample</span>
+                          </>
+                        )}
+                      </button>
+                      <WaveformVisualizer
+                        status={cardWaveState}
+                        level={isActive ? audioSnap.level : 0}
+                        barCount={7}
+                        size="sm"
+                      />
+                    </div>
+
+                    <a
+                      href="#try-experience"
+                      onClick={scrollToPlayground}
+                      className="btn-emiqen-ghost inline-flex items-center gap-1 text-xs font-semibold text-emiqen-blue hover:text-emiqen-blue-hover"
+                    >
+                      <span>Test in Playground</span>
+                      <ArrowRight className="w-3.5 h-3.5 btn-arrow-icon" />
+                    </a>
                   </div>
                 </div>
               </div>

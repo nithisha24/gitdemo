@@ -158,7 +158,7 @@ export const ContactSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleMailtoFallback}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-emiqen-blue hover:bg-emiqen-blue-hover text-white text-sm font-semibold transition-colors shadow-sm"
+                      className="btn-emiqen-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue"
                     >
                       <Mail className="w-4 h-4" />
                       <span>Dispatch via Email Client</span>
@@ -166,7 +166,7 @@ export const ContactSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setSubmittedStatus('idle')}
-                      className="w-full sm:w-auto px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition-colors"
+                      className="btn-emiqen-secondary w-full sm:w-auto px-4 py-3 rounded-xl text-slate-700 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue"
                     >
                       Edit Details
                     </button>
@@ -367,10 +367,10 @@ export const ContactSection: React.FC = () => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 px-6 rounded-xl font-semibold text-white bg-emiqen-blue hover:bg-emiqen-blue-hover active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-elevated"
+                    className="btn-emiqen-primary w-full py-3.5 px-6 rounded-xl font-semibold text-white flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue"
                   >
                     <span>Talk to our team</span>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4 btn-arrow-icon" />
                   </button>
 
                   <div className="pt-2 text-center">

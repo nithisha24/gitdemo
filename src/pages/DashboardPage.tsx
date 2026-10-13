@@ -40,10 +40,10 @@ export const DashboardPage: React.FC = () => {
             Authentication integration pending
           </div>
           <div className="flex gap-3 justify-center">
-            <Link to="/login" className="px-5 py-2.5 rounded-xl bg-emiqen-blue text-white text-sm font-semibold hover:bg-emiqen-blue-hover transition-colors">
+            <Link to="/login" className="btn-emiqen-primary px-5 py-2.5 rounded-xl text-white text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue">
               Sign In
             </Link>
-            <Link to="/" className="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors">
+            <Link to="/" className="btn-emiqen-secondary px-5 py-2.5 rounded-xl text-slate-700 text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue">
               Home
             </Link>
           </div>

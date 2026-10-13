@@ -39,7 +39,7 @@ export const WorkflowSection: React.FC = () => {
               return (
                 <div
                   key={step.step}
-                  className="rounded-2xl border border-emiqen-soft-border bg-white p-6 shadow-subtle hover:shadow-elevated transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+                  className="rounded-2xl border border-emiqen-soft-border bg-white p-6 shadow-subtle hover:border-emiqen-blue/30 transition-colors duration-200 flex flex-col justify-between group"
                 >
                   <div>
                     {/* Top Step Number & Icon */}
@@ -47,7 +47,7 @@ export const WorkflowSection: React.FC = () => {
                       <span className="text-2xl font-black font-mono tracking-tight bg-gradient-to-br from-emiqen-blue to-emiqen-violet bg-clip-text text-transparent">
                         {step.step}
                       </span>
-                      <div className="w-10 h-10 rounded-xl bg-emiqen-soft-bg border border-blue-100 flex items-center justify-center text-emiqen-blue group-hover:bg-emiqen-blue group-hover:text-white transition-colors duration-300">
+                      <div className="w-10 h-10 rounded-xl bg-emiqen-soft-bg border border-blue-100 flex items-center justify-center text-emiqen-blue group-hover:bg-emiqen-blue group-hover:text-white transition-colors duration-200">
                         <Icon className="w-5 h-5" />
                       </div>
                     </div>
@@ -88,10 +88,20 @@ export const WorkflowSection: React.FC = () => {
             </div>
             <a
               href="#use-cases"
-              className="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-semibold transition-colors"
+              onClick={(e) => {
+                e.preventDefault();
+                const el = document.querySelector('#use-cases');
+                if (el) {
+                  const navOffset = 80;
+                  const offsetPosition =
+                    el.getBoundingClientRect().top + window.pageYOffset - navOffset;
+                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+              }}
+              className="group shrink-0 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 hover:-translate-y-0.5 active:translate-y-0 border border-white/20 hover:border-emiqen-cyan/50 text-white text-xs font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-cyan"
             >
               <span>View Practical Scenarios</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
           </div>
         </div>

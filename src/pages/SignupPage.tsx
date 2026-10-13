@@ -381,7 +381,7 @@ export const SignupPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={status === 'loading' || status === 'success'}
-                  className="w-full py-3.5 px-6 rounded-xl font-semibold text-white bg-emiqen-blue hover:bg-emiqen-blue-hover active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-elevated disabled:opacity-70 disabled:cursor-not-allowed mt-2"
+                  className="btn-emiqen-primary w-full py-3.5 px-6 rounded-xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emiqen-blue"
                 >
                   {status === 'loading' ? (
                     <><Loader2 className="w-4 h-4 animate-spin" /><span>Creating account…</span></>
